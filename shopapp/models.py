@@ -18,3 +18,12 @@ class User(models.Model):
     ]
     role=models.CharField(max_length=20,choices=role_options ,default="customer")
 
+class Product(models.Model):
+
+    name=models.CharField(max_length=50)
+    description=models.TextField()
+    price=models.PositiveIntegerField()
+    stock=models.PositiveIntegerField()
+    seller=models.ForeignKey(User,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
