@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
 from rest_framework import status
+from rest_framework.views import APIView
+from .authentication import CustomJWTAuthentication
 
 from .models import User
 from .serializers import RegisterSerializer,LoginSerializer
@@ -20,6 +22,15 @@ class LoginView(CreateAPIView):
             token=ser.save()
             return Response({"access":token})
         return Response (ser.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+class TestView(APIView):
+    authentication_classes=[CustomJWTAuthentication]
+    def get(self,request):
+        return Response(request.user.username)
+
+
+    
 
 
 
