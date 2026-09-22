@@ -1,5 +1,5 @@
 from rest_framework  import serializers
-from .models import User,Product
+from .models import*
 from django.contrib.auth.hashers import make_password,check_password
 
 from rest_framework_simplejwt.tokens import AccessToken
@@ -70,4 +70,19 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model=Product
         fields='__all__'
-        read_only_fields=['id','created_at','updated_at','seller']
+        read_only_fields=['id','created_at','updated_at','seller',]
+
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+        read_only_fields = ['id', 'created_at']
+
+class StoreSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Store
+        fields = '__all__'
+        read_only_fields = [ 'created_at','updated_at','seller']
+

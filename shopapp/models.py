@@ -18,6 +18,18 @@ class User(models.Model):
     ]
     role=models.CharField(max_length=20,choices=role_options ,default="customer")
 
+    def __str__(self):
+        return self.username
+
+class Category(models.Model):
+
+    name= models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
 
     name=models.CharField(max_length=50)
@@ -25,5 +37,20 @@ class Product(models.Model):
     price=models.PositiveIntegerField()
     stock=models.PositiveIntegerField()
     seller=models.ForeignKey(User,on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,
+        on_delete=models.PROTECT,
+        related_name='products',
+        null=True,
+        blank=True
+    )
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+
+class Store(models.Model):
+
+    name=models.CharField(max_length=50,unique=True)
+    description=models.TextField()
+    seller=models.OneToOneField(User,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
